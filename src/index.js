@@ -2,37 +2,64 @@ import React, { Component } from 'react';
 import XLSX from 'xlsx';
 
 export class OutTable extends Component {
+  constructor(props) {
+    super(props);
+    this.rows = props.data;
+    this.cols = props.columns;
+    this.withZeroColumn = props.withZeroColumn;
+    this.withoutRowNum = props.withoutRowNum;
+    this.tableHeaderRowClass = props.tableHeaderRowClass;
+    this.className = props.className;
+    this.tableClassName = props.tableClassName;
+    this.renderRowNum = props.renderRowNum;
+  }
 
-	constructor(props) {
-        super(props);
-        this.state = {
-
+  renderHeader() {
+    return (
+      <tr>
+        {
+          this.withZeroColumn && !this.withoutRowNum && 
+            <th className={this.tableHeaderRowClass || ""}></th>
         }
-    }
+        {
+          this.cols.map((c) =>
+            <th key={c.key} className={c.key === -1 ? this.tableHeaderRowClass : ""}>{c.key === -1 ? "" : c.name}</th>)
+        }
+      </tr>
+    )
+  }
+
+  renderContent() {
+    return this.rows.map((row, index) => 
+      <tr key={index}>
+        {
+          !this.withoutRowNum && 
+            <td key={index} className={this.tableHeaderRowClass}>
+              {this.renderRowNum ? this.renderRowNum(row, index) : index}
+            </td>
+        }
+        {this.cols.map(c => {
+          if (row[c.key] === undefined || row[c.key] === null) {return}
+          if (row[c.key]) {
+            return <td key={c.key}>{ row[c.key] }</td>
+          }
+        })}
+      </tr>
+    )
+  }
 
 	render() {
-        return (
-            <div className={this.props.className}>
-                <table className={this.props.tableClassName}  >
-                    <tbody>
-                        <tr>
-                            {this.props.withZeroColumn && !this.props.withoutRowNum && <th className={this.props.tableHeaderRowClass || ""}></th>}
-                            {
-                                this.props.columns.map((c) =>
-                                    <th key={c.key} className={c.key === -1 ? this.props.tableHeaderRowClass : ""}>{c.key === -1 ? "" : c.name}</th>
-                                )
-
-                            }
-                        </tr>
-                        {this.props.data.map((r,i) => <tr key={i}>
-                            {!this.props.withoutRowNum && <td key={i} className={this.props.tableHeaderRowClass}>{this.props.renderRowNum?this.props.renderRowNum(r,i):i}</td>}
-                            {this.props.columns.map(c => <td key={c.key}>{ r[c.key] }</td>)}
-                        </tr>)}
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
+    return (
+      <div className={this.className}>
+        <table className={this.tableClassName}>
+          <tbody>
+            {this.renderHeader()}
+            {this.renderContent()}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
 export function ExcelRenderer(file, callback) {
