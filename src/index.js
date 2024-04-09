@@ -38,12 +38,12 @@ export class OutTable extends Component {
               {this.renderRowNum ? this.renderRowNum(row, index) : index}
             </td>
         }
-        {this.cols.map(c => {
-          if (row[c.key] === undefined || row[c.key] === null) {return}
-          if (row[c.key]) {
-            return <td key={c.key}>{ row[c.key] }</td>
-          }
-        })}
+        {
+          this.cols.map(c => {
+            if (row[c.key] === undefined || row[c.key] === null) {return}
+            return <td key={c.key}>{ row[c.key] }</td>;
+          })
+        }
       </tr>
     )
   }
