@@ -1,6 +1,6 @@
 {
   "name": "excel-renderer",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A react library to render and display excel sheets on webpage",
   "main": "build/index.js",
   "mode": "production",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/temirtator/excel-renderer.git"
+    "url": "git+https://github.com/Temirtator/react-excel-renderer.git"
   },
   "keywords": [
     "react",
@@ -24,9 +24,9 @@
   "author": "Temirlan Shagyrov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/temirtator/excel-renderer/issues"
+    "url": "https://github.com/Temirtator/react-excel-renderer/issues"
   },
-  "homepage": "https://github.com/temirtator/excel-renderer#readme",
+  "homepage": "https://github.com/Temirtator/react-excel-renderer#readme",
   "peerDependencies": {
     "react": "^16.7.0"
   },
